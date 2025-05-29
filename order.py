@@ -1,14 +1,8 @@
-from customer import Customer
-from coffee import Coffee
-
 class Order:
     def __init__(self, customer, coffee, price):
         self.customer = customer
         self.coffee = coffee
         self.price = price
-
-        customer.add_order(self)
-        coffee.add_order(self)
 
     @property
     def customer(self):
@@ -16,6 +10,7 @@ class Order:
 
     @customer.setter
     def customer(self, value):
+        from customer import Customer
         if not isinstance(value, Customer):
             raise TypeError("customer must be a Customer instance.")
         self._customer = value
@@ -26,6 +21,7 @@ class Order:
 
     @coffee.setter
     def coffee(self, value):
+        from coffee import Coffee
         if not isinstance(value, Coffee):
             raise TypeError("coffee must be a Coffee instance.")
         self._coffee = value
@@ -40,7 +36,4 @@ class Order:
             raise TypeError("price must be a number.")
         if not (1.0 <= value <= 10.0):
             raise ValueError("price must be between 1.0 and 10.0.")
-        self._price = value
-
-    def __repr__(self):
-        return f"<Order {self.customer.name} - {self.coffee.name} - ${self.price:.2f}>"
+        self._price = float(value)

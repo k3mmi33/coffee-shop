@@ -1,20 +1,29 @@
 from customer import Customer
 from coffee import Coffee
-from order import Order
 
-# Sample data
-alice = Customer("Alice")
-bob = Customer("Bob")
+def main():
+    alice = Customer("Alice")
+    bob = Customer("Bob")
 
-latte = Coffee("Latte")
-mocha = Coffee("Mocha")
+    espresso = Coffee("Espresso")
+    latte = Coffee("Latte")
 
-order1 = Order(alice, latte, 4.5)
-order2 = Order(alice, mocha, 5.0)
-order3 = Order(bob, latte, 4.5)
+    alice.create_order(espresso, 3.5)
+    alice.create_order(latte, 4.0)
+    bob.create_order(espresso, 3.0)
 
-# Output tests
-print(alice.coffees())         # [Latte, Mocha]
-print(bob.coffees())           # [Latte]
-print(latte.customers())       # [Alice, Bob]
-print(alice.total_money_spent())  # 9.5
+    print(f"Alice's orders: {[order.coffee.name for order in alice.orders()]}")
+    print(f"Alice's coffees: {[coffee.name for coffee in alice.coffees()]}")
+
+    print(f"Espresso orders count: {espresso.num_orders()}")
+    print(f"Espresso average price: {espresso.average_price():.2f}")
+    print(f"Espresso customers: {[customer.name for customer in espresso.customers()]}")
+
+    aficionado = Customer.most_aficionado(espresso)
+    if aficionado:
+        print(f"Most aficionado for Espresso: {aficionado.name}")
+    else:
+        print("No aficionado for Espresso")
+
+if __name__ == "__main__":
+    main()
